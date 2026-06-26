@@ -1,5 +1,5 @@
 products:
-  image: products:v1
+  image: registry.gitlab.com/devops4371126/products-backend:798ec8ff
   replicaCount: 3 
   port: "5000"
 mongodb:
