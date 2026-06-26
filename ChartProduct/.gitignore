@@ -1,0 +1,28 @@
+# Helm
+*.tgz
+Chart.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets (если не зашифрованы)
+**/values-dev.yaml
+**/values-prod.yaml
+**/secrets.yaml
+
+# Ansible (если есть)
+*.retry
+*.log
+.ansible/
+vault_pass.txt
+
+# Другое
+*.tmp
+*.bak

@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Release.Name }}
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.products.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: {{ .Values.products.image }}
+        ports:
+        - containerPort: {{ .Values.products.port }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-config
+        - secretRef:
+            name: {{ .Release.Name }}-secret   
+
+
+
+---            
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Release.Name }}
+  name: {{ .Release.Name }}-mongodb-deployment
+  labels:
+    app: {{ .Release.Name }}-mongodb-deployment
+spec:
+  replicas: {{ .Values.mongodb.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-mongodb
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-mongodb
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-mongodb
+        image: {{ .Values.mongodb.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.mongodb.port }}
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: DB_USER
+        - name:  MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: DB_PASSWORD
+
+      
+                                   
+
+

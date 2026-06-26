@@ -1,0 +1,9 @@
+products:
+  image: products:v1
+  replicaCount: 3 
+  port: "5000"
+mongodb:
+  image: mongo:latest
+  replicaCount: 1
+  port: "27017"  
+

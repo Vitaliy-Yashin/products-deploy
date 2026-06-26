@@ -1,0 +1,9 @@
+apiVersion: v2
+name: products-chart
+description: A products charh for test
+
+type: application
+
+version: 0.1.0
+
+appVersion: 1.16.0
